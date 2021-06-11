@@ -1,0 +1,32 @@
+version: '3'
+services:
+  server:
+    container_name: portfolio-manager-backend-server
+    build: ./server
+    expose:
+      - "3000"
+    networks: 
+      - portfolionetwork
+  ui:
+    container_name: portfolio-manager-ui
+    build: ./ui
+    ports:
+      - "5000:5000"
+    networks: 
+      - portfolionetwork
+    depends_on: 
+      - server
+    links:
+      - server
+  db:
+    container_name: portfolio-manager-db
+    build: ./db
+    networks: 
+      - portfolionetwork
+    depends_on: 
+      - server
+
+networks: 
+  portfolionetwork:
+    name: portfolio-manager-network
+    
